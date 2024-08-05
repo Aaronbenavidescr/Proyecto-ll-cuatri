@@ -24,10 +24,10 @@ Partial Class frm_menu
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frm_menu))
         Panel1 = New Panel()
+        Panel3 = New Panel()
         btn_salir = New Button()
         btn_asignar = New Button()
         btn_estudidantes = New Button()
-        Panel3 = New Panel()
         Panel2 = New Panel()
         btn_agregar = New Button()
         btn_cerrar = New Button()
@@ -40,17 +40,25 @@ Partial Class frm_menu
         ' 
         ' Panel1
         ' 
+        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
         Panel1.BackColor = Color.MidnightBlue
+        Panel1.Controls.Add(Panel3)
         Panel1.Controls.Add(btn_salir)
         Panel1.Controls.Add(btn_asignar)
         Panel1.Controls.Add(btn_estudidantes)
-        Panel1.Controls.Add(Panel3)
         Panel1.Controls.Add(Panel2)
         Panel1.Controls.Add(btn_agregar)
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(174, 885)
         Panel1.TabIndex = 0
+        ' 
+        ' Panel3
+        ' 
+        Panel3.Location = New Point(160, 3)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(1029, 31)
+        Panel3.TabIndex = 1
         ' 
         ' btn_salir
         ' 
@@ -100,13 +108,6 @@ Partial Class frm_menu
         btn_estudidantes.Text = "Ver estudiantes"
         btn_estudidantes.UseVisualStyleBackColor = False
         ' 
-        ' Panel3
-        ' 
-        Panel3.Location = New Point(143, 0)
-        Panel3.Name = "Panel3"
-        Panel3.Size = New Size(658, 31)
-        Panel3.TabIndex = 1
-        ' 
         ' Panel2
         ' 
         Panel2.BackgroundImage = My.Resources.Resources.frase
@@ -134,6 +135,7 @@ Partial Class frm_menu
         ' 
         ' btn_cerrar
         ' 
+        btn_cerrar.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btn_cerrar.AutoSize = True
         btn_cerrar.BackColor = Color.Transparent
         btn_cerrar.BackgroundImage = My.Resources.Resources._9110796_x_icon
@@ -151,6 +153,7 @@ Partial Class frm_menu
         ' 
         ' btn_restaurar
         ' 
+        btn_restaurar.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btn_restaurar.AutoSize = True
         btn_restaurar.BackColor = Color.Transparent
         btn_restaurar.BackgroundImage = CType(resources.GetObject("btn_restaurar.BackgroundImage"), Image)
@@ -160,14 +163,15 @@ Partial Class frm_menu
         btn_restaurar.FlatAppearance.MouseOverBackColor = Color.DeepSkyBlue
         btn_restaurar.FlatStyle = FlatStyle.Flat
         btn_restaurar.ForeColor = SystemColors.ControlText
-        btn_restaurar.Location = New Point(1280, 0)
+        btn_restaurar.Location = New Point(1276, 0)
         btn_restaurar.Name = "btn_restaurar"
-        btn_restaurar.Size = New Size(44, 31)
+        btn_restaurar.Size = New Size(48, 31)
         btn_restaurar.TabIndex = 2
         btn_restaurar.UseVisualStyleBackColor = False
         ' 
         ' btn_maximizar
         ' 
+        btn_maximizar.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btn_maximizar.AutoSize = True
         btn_maximizar.BackColor = Color.Transparent
         btn_maximizar.BackgroundImage = CType(resources.GetObject("btn_maximizar.BackgroundImage"), Image)
@@ -177,14 +181,15 @@ Partial Class frm_menu
         btn_maximizar.FlatAppearance.MouseOverBackColor = Color.DeepSkyBlue
         btn_maximizar.FlatStyle = FlatStyle.Flat
         btn_maximizar.ForeColor = SystemColors.ControlText
-        btn_maximizar.Location = New Point(1280, 0)
+        btn_maximizar.Location = New Point(1276, 0)
         btn_maximizar.Name = "btn_maximizar"
-        btn_maximizar.Size = New Size(44, 31)
+        btn_maximizar.Size = New Size(47, 31)
         btn_maximizar.TabIndex = 3
         btn_maximizar.UseVisualStyleBackColor = False
         ' 
         ' btn_minimizar
         ' 
+        btn_minimizar.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btn_minimizar.AutoSize = True
         btn_minimizar.BackColor = Color.Transparent
         btn_minimizar.BackgroundImage = CType(resources.GetObject("btn_minimizar.BackgroundImage"), Image)
@@ -194,7 +199,7 @@ Partial Class frm_menu
         btn_minimizar.FlatAppearance.MouseOverBackColor = Color.DeepSkyBlue
         btn_minimizar.FlatStyle = FlatStyle.Flat
         btn_minimizar.ForeColor = SystemColors.ControlText
-        btn_minimizar.Location = New Point(1230, 0)
+        btn_minimizar.Location = New Point(1236, 0)
         btn_minimizar.Name = "btn_minimizar"
         btn_minimizar.Size = New Size(44, 31)
         btn_minimizar.TabIndex = 4
@@ -202,6 +207,7 @@ Partial Class frm_menu
         ' 
         ' panel_contenedor
         ' 
+        panel_contenedor.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         panel_contenedor.BackColor = Color.Transparent
         panel_contenedor.Location = New Point(170, 37)
         panel_contenedor.Name = "panel_contenedor"
@@ -215,9 +221,9 @@ Partial Class frm_menu
         BackgroundImage = My.Resources.Resources.fondo_loggin
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1397, 815)
+        Controls.Add(btn_maximizar)
         Controls.Add(panel_contenedor)
         Controls.Add(btn_minimizar)
-        Controls.Add(btn_maximizar)
         Controls.Add(btn_restaurar)
         Controls.Add(btn_cerrar)
         Controls.Add(Panel1)

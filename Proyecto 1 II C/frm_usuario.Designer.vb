@@ -38,54 +38,77 @@ Partial Class frm_usuario
         ' btn_ingresar
         ' 
         btn_ingresar.Anchor = AnchorStyles.Bottom
-        btn_ingresar.Location = New Point(327, 312)
+        btn_ingresar.BackColor = Color.Transparent
+        btn_ingresar.FlatAppearance.BorderColor = SystemColors.AppWorkspace
+        btn_ingresar.FlatAppearance.BorderSize = 0
+        btn_ingresar.FlatStyle = FlatStyle.Flat
+        btn_ingresar.Font = New Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btn_ingresar.ForeColor = Color.White
+        btn_ingresar.Location = New Point(343, 310)
         btn_ingresar.Name = "btn_ingresar"
-        btn_ingresar.Size = New Size(75, 23)
+        btn_ingresar.Size = New Size(99, 31)
         btn_ingresar.TabIndex = 0
         btn_ingresar.Text = "Ingresar"
-        btn_ingresar.UseVisualStyleBackColor = True
+        btn_ingresar.UseVisualStyleBackColor = False
         ' 
         ' txt_contraseña
         ' 
         txt_contraseña.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        txt_contraseña.Location = New Point(260, 222)
+        txt_contraseña.BackColor = SystemColors.ScrollBar
+        txt_contraseña.BorderStyle = BorderStyle.None
+        txt_contraseña.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txt_contraseña.ForeColor = Color.Gray
+        txt_contraseña.Location = New Point(286, 224)
         txt_contraseña.Name = "txt_contraseña"
-        txt_contraseña.Size = New Size(210, 23)
+        txt_contraseña.Size = New Size(210, 25)
         txt_contraseña.TabIndex = 1
+        txt_contraseña.Text = "Contraseña"
+        txt_contraseña.TextAlign = HorizontalAlignment.Center
         ' 
         ' txt_usuario
         ' 
         txt_usuario.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
-        txt_usuario.Location = New Point(260, 153)
+        txt_usuario.BackColor = SystemColors.ScrollBar
+        txt_usuario.BorderStyle = BorderStyle.None
+        txt_usuario.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txt_usuario.ForeColor = Color.Gray
+        txt_usuario.Location = New Point(286, 153)
         txt_usuario.Name = "txt_usuario"
-        txt_usuario.Size = New Size(210, 23)
+        txt_usuario.Size = New Size(210, 25)
         txt_usuario.TabIndex = 2
+        txt_usuario.Text = "Usuario"
+        txt_usuario.TextAlign = HorizontalAlignment.Center
         ' 
         ' btn_salir
         ' 
         btn_salir.Anchor = AnchorStyles.Bottom
-        btn_salir.Location = New Point(327, 368)
+        btn_salir.BackColor = Color.Transparent
+        btn_salir.FlatAppearance.BorderSize = 0
+        btn_salir.FlatStyle = FlatStyle.Flat
+        btn_salir.Font = New Font("Arial", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        btn_salir.ForeColor = Color.White
+        btn_salir.Location = New Point(343, 367)
         btn_salir.Name = "btn_salir"
-        btn_salir.Size = New Size(75, 23)
+        btn_salir.Size = New Size(99, 29)
         btn_salir.TabIndex = 3
         btn_salir.Text = "Salir"
-        btn_salir.UseVisualStyleBackColor = True
+        btn_salir.UseVisualStyleBackColor = False
         ' 
         ' Panel1
         ' 
+        Panel1.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         Panel1.BackColor = Color.Transparent
         Panel1.Controls.Add(btn_minimizar)
         Panel1.Controls.Add(btn_maximizar)
         Panel1.Controls.Add(btn_restaurar)
         Panel1.Controls.Add(btn_cerrar)
-        Panel1.Location = New Point(0, 0)
+        Panel1.Location = New Point(0, 2)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(801, 33)
         Panel1.TabIndex = 4
         ' 
         ' btn_minimizar
         ' 
-        btn_minimizar.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         btn_minimizar.AutoSize = True
         btn_minimizar.BackColor = Color.Transparent
         btn_minimizar.BackgroundImage = CType(resources.GetObject("btn_minimizar.BackgroundImage"), Image)
@@ -95,7 +118,7 @@ Partial Class frm_usuario
         btn_minimizar.FlatAppearance.MouseOverBackColor = Color.DeepSkyBlue
         btn_minimizar.FlatStyle = FlatStyle.Flat
         btn_minimizar.ForeColor = SystemColors.ControlText
-        btn_minimizar.Location = New Point(657, 0)
+        btn_minimizar.Location = New Point(671, -4)
         btn_minimizar.Name = "btn_minimizar"
         btn_minimizar.Size = New Size(44, 33)
         btn_minimizar.TabIndex = 8
@@ -103,7 +126,7 @@ Partial Class frm_usuario
         ' 
         ' btn_maximizar
         ' 
-        btn_maximizar.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btn_maximizar.Anchor = AnchorStyles.None
         btn_maximizar.AutoSize = True
         btn_maximizar.BackColor = Color.Transparent
         btn_maximizar.BackgroundImage = CType(resources.GetObject("btn_maximizar.BackgroundImage"), Image)
@@ -129,7 +152,8 @@ Partial Class frm_usuario
         btn_restaurar.FlatAppearance.BorderSize = 0
         btn_restaurar.FlatAppearance.MouseDownBackColor = Color.LightSkyBlue
         btn_restaurar.FlatAppearance.MouseOverBackColor = Color.DeepSkyBlue
-        btn_restaurar.ForeColor = SystemColors.ControlText
+        btn_restaurar.FlatStyle = FlatStyle.Flat
+        btn_restaurar.ForeColor = SystemColors.ControlDarkDark
         btn_restaurar.Location = New Point(707, 0)
         btn_restaurar.Name = "btn_restaurar"
         btn_restaurar.Size = New Size(44, 33)
@@ -152,6 +176,7 @@ Partial Class frm_usuario
         btn_cerrar.Name = "btn_cerrar"
         btn_cerrar.Size = New Size(44, 33)
         btn_cerrar.TabIndex = 5
+        btn_cerrar.TextAlign = ContentAlignment.TopRight
         btn_cerrar.UseVisualStyleBackColor = False
         ' 
         ' frm_usuario
@@ -169,6 +194,7 @@ Partial Class frm_usuario
         DoubleBuffered = True
         FormBorderStyle = FormBorderStyle.None
         Name = "frm_usuario"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "frm_usuario"
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
