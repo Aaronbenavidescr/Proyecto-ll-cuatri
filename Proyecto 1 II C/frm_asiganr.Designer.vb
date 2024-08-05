@@ -47,14 +47,15 @@ Partial Class frm_asiganr
         Button2 = New Button()
         Button3 = New Button()
         btn_matriculadas_aprobadas = New Button()
-        Button5 = New Button()
-        Button6 = New Button()
-        lbl_porcentaje = New Label()
+        btn_matri_pend = New Button()
+        btn_pend_matri = New Button()
+        lbl_porc_apro = New Label()
         btn_buscar = New Button()
         pb_aprobadas = New ProgressBar()
-        pb_pendientes = New ProgressBar()
-        pb_matriculadas = New ProgressBar()
+        Label7 = New Label()
         lbl_materia_matri = New Label()
+        lbl_materia_pend = New Label()
+        lbl_materia_apro = New Label()
         CType(dgv_apro, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgv_pend, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgv_matri, ComponentModel.ISupportInitialize).BeginInit()
@@ -63,6 +64,7 @@ Partial Class frm_asiganr
         ' dgv_apro
         ' 
         dgv_apro.AllowUserToAddRows = False
+        dgv_apro.BackgroundColor = SystemColors.MenuHighlight
         dgv_apro.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgv_apro.Columns.AddRange(New DataGridViewColumn() {ID_Materia, Nombre_materia, Estado})
         dgv_apro.Location = New Point(-3, 247)
@@ -91,6 +93,7 @@ Partial Class frm_asiganr
         ' dgv_pend
         ' 
         dgv_pend.AllowUserToAddRows = False
+        dgv_pend.BackgroundColor = SystemColors.MenuHighlight
         dgv_pend.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgv_pend.Columns.AddRange(New DataGridViewColumn() {DataGridViewTextBoxColumn1, DataGridViewTextBoxColumn2, DataGridViewTextBoxColumn3})
         dgv_pend.Location = New Point(421, 247)
@@ -121,11 +124,12 @@ Partial Class frm_asiganr
         ' 
         ' dgv_matri
         ' 
+        dgv_matri.BackgroundColor = SystemColors.MenuHighlight
         dgv_matri.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgv_matri.Columns.AddRange(New DataGridViewColumn() {DataGridViewTextBoxColumn4, DataGridViewTextBoxColumn5, DataGridViewTextBoxColumn6})
-        dgv_matri.Location = New Point(858, 247)
+        dgv_matri.Location = New Point(861, 247)
         dgv_matri.Name = "dgv_matri"
-        dgv_matri.Size = New Size(352, 487)
+        dgv_matri.Size = New Size(349, 487)
         dgv_matri.TabIndex = 2
         ' 
         ' DataGridViewTextBoxColumn4
@@ -148,195 +152,243 @@ Partial Class frm_asiganr
         ' 
         ' txt_identificacion
         ' 
-        txt_identificacion.Location = New Point(101, 45)
+        txt_identificacion.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        txt_identificacion.Location = New Point(156, 53)
         txt_identificacion.Name = "txt_identificacion"
-        txt_identificacion.Size = New Size(100, 23)
+        txt_identificacion.Size = New Size(100, 26)
         txt_identificacion.TabIndex = 3
         ' 
         ' txt_nombre_estudiante
         ' 
+        txt_nombre_estudiante.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         txt_nombre_estudiante.Location = New Point(1037, 29)
         txt_nombre_estudiante.Name = "txt_nombre_estudiante"
-        txt_nombre_estudiante.Size = New Size(163, 23)
+        txt_nombre_estudiante.Size = New Size(163, 26)
         txt_nombre_estudiante.TabIndex = 4
         ' 
         ' txt_carrera
         ' 
+        txt_carrera.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         txt_carrera.Location = New Point(1037, 90)
         txt_carrera.Name = "txt_carrera"
-        txt_carrera.Size = New Size(163, 23)
+        txt_carrera.Size = New Size(163, 26)
         txt_carrera.TabIndex = 5
         ' 
         ' Label1
         ' 
         Label1.AutoSize = True
+        Label1.BackColor = Color.Transparent
+        Label1.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label1.ForeColor = Color.White
         Label1.Location = New Point(16, 49)
         Label1.Name = "Label1"
-        Label1.Size = New Size(79, 15)
+        Label1.Size = New Size(134, 24)
         Label1.TabIndex = 6
         Label1.Text = "Identificacion"
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
-        Label2.Location = New Point(911, 32)
+        Label2.BackColor = Color.Transparent
+        Label2.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label2.ForeColor = Color.White
+        Label2.Location = New Point(829, 28)
         Label2.Name = "Label2"
-        Label2.Size = New Size(109, 15)
+        Label2.Size = New Size(185, 24)
         Label2.TabIndex = 7
         Label2.Text = "Nombre estudiante"
         ' 
         ' Label3
         ' 
         Label3.AutoSize = True
-        Label3.Location = New Point(911, 98)
+        Label3.BackColor = Color.Transparent
+        Label3.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label3.ForeColor = Color.White
+        Label3.Location = New Point(918, 89)
         Label3.Name = "Label3"
-        Label3.Size = New Size(45, 15)
+        Label3.Size = New Size(82, 24)
         Label3.TabIndex = 8
         Label3.Text = "Carrera"
         ' 
         ' Label4
         ' 
         Label4.AutoSize = True
+        Label4.BackColor = Color.Transparent
+        Label4.Font = New Font("Arial Narrow", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label4.ForeColor = Color.White
         Label4.Location = New Point(107, 203)
         Label4.Name = "Label4"
-        Label4.Size = New Size(64, 15)
+        Label4.Size = New Size(98, 25)
         Label4.TabIndex = 9
         Label4.Text = "Aprobadas"
         ' 
         ' Label5
         ' 
         Label5.AutoSize = True
+        Label5.BackColor = Color.Transparent
+        Label5.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label5.ForeColor = Color.White
         Label5.Location = New Point(558, 213)
         Label5.Name = "Label5"
-        Label5.Size = New Size(65, 15)
+        Label5.Size = New Size(115, 24)
         Label5.TabIndex = 10
         Label5.Text = "Pendientes"
         ' 
         ' Label6
         ' 
         Label6.AutoSize = True
+        Label6.BackColor = Color.Transparent
+        Label6.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label6.ForeColor = Color.White
         Label6.Location = New Point(1015, 211)
         Label6.Name = "Label6"
-        Label6.Size = New Size(75, 15)
+        Label6.Size = New Size(129, 24)
         Label6.TabIndex = 11
         Label6.Text = "Matriculadas"
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(340, 410)
+        Button1.Location = New Point(335, 410)
         Button1.Name = "Button1"
-        Button1.Size = New Size(75, 23)
+        Button1.Size = New Size(85, 23)
         Button1.TabIndex = 12
-        Button1.Text = "Button1"
+        Button1.Text = "Pendiente >"
         Button1.UseVisualStyleBackColor = True
         ' 
         ' Button2
         ' 
-        Button2.Location = New Point(340, 490)
+        Button2.Location = New Point(335, 510)
         Button2.Name = "Button2"
-        Button2.Size = New Size(75, 23)
+        Button2.Size = New Size(85, 23)
         Button2.TabIndex = 13
-        Button2.Text = "Button2"
+        Button2.Text = "< Aprobadas"
         Button2.UseVisualStyleBackColor = True
         ' 
         ' Button3
         ' 
-        Button3.Location = New Point(340, 583)
+        Button3.Location = New Point(335, 610)
         Button3.Name = "Button3"
-        Button3.Size = New Size(75, 23)
+        Button3.Size = New Size(85, 23)
         Button3.TabIndex = 14
-        Button3.Text = "Button3"
+        Button3.Text = "Matricular>>"
         Button3.UseVisualStyleBackColor = True
         ' 
         ' btn_matriculadas_aprobadas
         ' 
-        btn_matriculadas_aprobadas.Location = New Point(780, 583)
+        btn_matriculadas_aprobadas.Location = New Point(776, 610)
         btn_matriculadas_aprobadas.Name = "btn_matriculadas_aprobadas"
-        btn_matriculadas_aprobadas.Size = New Size(75, 23)
+        btn_matriculadas_aprobadas.Size = New Size(85, 23)
         btn_matriculadas_aprobadas.TabIndex = 17
-        btn_matriculadas_aprobadas.Text = "Button4"
+        btn_matriculadas_aprobadas.Text = "<<Aprobar"
         btn_matriculadas_aprobadas.UseVisualStyleBackColor = True
         ' 
-        ' Button5
+        ' btn_matri_pend
         ' 
-        Button5.Location = New Point(780, 490)
-        Button5.Name = "Button5"
-        Button5.Size = New Size(75, 23)
-        Button5.TabIndex = 16
-        Button5.Text = "Button5"
-        Button5.UseVisualStyleBackColor = True
+        btn_matri_pend.Location = New Point(776, 410)
+        btn_matri_pend.Name = "btn_matri_pend"
+        btn_matri_pend.Size = New Size(85, 23)
+        btn_matri_pend.TabIndex = 16
+        btn_matri_pend.Text = "< Pendiente"
+        btn_matri_pend.UseVisualStyleBackColor = True
         ' 
-        ' Button6
+        ' btn_pend_matri
         ' 
-        Button6.Location = New Point(780, 410)
-        Button6.Name = "Button6"
-        Button6.Size = New Size(75, 23)
-        Button6.TabIndex = 15
-        Button6.Text = "Button6"
-        Button6.UseVisualStyleBackColor = True
+        btn_pend_matri.Location = New Point(776, 510)
+        btn_pend_matri.Name = "btn_pend_matri"
+        btn_pend_matri.Size = New Size(85, 23)
+        btn_pend_matri.TabIndex = 15
+        btn_pend_matri.Text = "Matricular > "
+        btn_pend_matri.UseVisualStyleBackColor = True
         ' 
-        ' lbl_porcentaje
+        ' lbl_porc_apro
         ' 
-        lbl_porcentaje.AutoSize = True
-        lbl_porcentaje.Location = New Point(1109, 187)
-        lbl_porcentaje.Name = "lbl_porcentaje"
-        lbl_porcentaje.Size = New Size(41, 15)
-        lbl_porcentaje.TabIndex = 18
-        lbl_porcentaje.Text = "Label7"
+        lbl_porc_apro.AutoSize = True
+        lbl_porc_apro.BackColor = Color.Transparent
+        lbl_porc_apro.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lbl_porc_apro.ForeColor = Color.White
+        lbl_porc_apro.Location = New Point(696, 112)
+        lbl_porc_apro.Name = "lbl_porc_apro"
+        lbl_porc_apro.Size = New Size(22, 18)
+        lbl_porc_apro.TabIndex = 18
+        lbl_porc_apro.Text = "%"
         ' 
         ' btn_buscar
         ' 
-        btn_buscar.Location = New Point(67, 98)
+        btn_buscar.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        btn_buscar.ForeColor = Color.DodgerBlue
+        btn_buscar.Location = New Point(96, 111)
         btn_buscar.Name = "btn_buscar"
-        btn_buscar.Size = New Size(75, 23)
+        btn_buscar.Size = New Size(93, 39)
         btn_buscar.TabIndex = 19
         btn_buscar.Text = "Buscar"
         btn_buscar.UseVisualStyleBackColor = True
         ' 
         ' pb_aprobadas
         ' 
-        pb_aprobadas.Location = New Point(271, 55)
+        pb_aprobadas.Location = New Point(573, 111)
         pb_aprobadas.Name = "pb_aprobadas"
         pb_aprobadas.Size = New Size(100, 23)
         pb_aprobadas.TabIndex = 20
         ' 
-        ' pb_pendientes
+        ' Label7
         ' 
-        pb_pendientes.Location = New Point(273, 113)
-        pb_pendientes.Name = "pb_pendientes"
-        pb_pendientes.Size = New Size(100, 23)
-        pb_pendientes.TabIndex = 21
-        ' 
-        ' pb_matriculadas
-        ' 
-        pb_matriculadas.Location = New Point(267, 164)
-        pb_matriculadas.Name = "pb_matriculadas"
-        pb_matriculadas.Size = New Size(100, 23)
-        pb_matriculadas.TabIndex = 22
+        Label7.AutoSize = True
+        Label7.BackColor = Color.Transparent
+        Label7.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label7.ForeColor = Color.White
+        Label7.Location = New Point(433, 112)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(114, 18)
+        Label7.TabIndex = 24
+        Label7.Text = "Avance carrera"
         ' 
         ' lbl_materia_matri
         ' 
         lbl_materia_matri.AutoSize = True
-        lbl_materia_matri.Location = New Point(559, 65)
+        lbl_materia_matri.Location = New Point(1037, 167)
         lbl_materia_matri.Name = "lbl_materia_matri"
         lbl_materia_matri.Size = New Size(41, 15)
-        lbl_materia_matri.TabIndex = 23
-        lbl_materia_matri.Text = "Label7"
+        lbl_materia_matri.TabIndex = 25
+        lbl_materia_matri.Text = "Label8"
+        lbl_materia_matri.Visible = False
+        ' 
+        ' lbl_materia_pend
+        ' 
+        lbl_materia_pend.AutoSize = True
+        lbl_materia_pend.Location = New Point(596, 182)
+        lbl_materia_pend.Name = "lbl_materia_pend"
+        lbl_materia_pend.Size = New Size(41, 15)
+        lbl_materia_pend.TabIndex = 26
+        lbl_materia_pend.Text = "Label8"
+        lbl_materia_pend.Visible = False
+        ' 
+        ' lbl_materia_apro
+        ' 
+        lbl_materia_apro.AutoSize = True
+        lbl_materia_apro.Location = New Point(166, 186)
+        lbl_materia_apro.Name = "lbl_materia_apro"
+        lbl_materia_apro.Size = New Size(41, 15)
+        lbl_materia_apro.TabIndex = 27
+        lbl_materia_apro.Text = "Label9"
+        lbl_materia_apro.Visible = False
         ' 
         ' frm_asiganr
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        BackgroundImage = My.Resources.Resources.fondo_loggin
+        BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1212, 738)
+        Controls.Add(lbl_materia_apro)
+        Controls.Add(lbl_materia_pend)
         Controls.Add(lbl_materia_matri)
-        Controls.Add(pb_matriculadas)
-        Controls.Add(pb_pendientes)
+        Controls.Add(Label7)
         Controls.Add(pb_aprobadas)
         Controls.Add(btn_buscar)
-        Controls.Add(lbl_porcentaje)
+        Controls.Add(lbl_porc_apro)
         Controls.Add(btn_matriculadas_aprobadas)
-        Controls.Add(Button5)
-        Controls.Add(Button6)
+        Controls.Add(btn_matri_pend)
+        Controls.Add(btn_pend_matri)
         Controls.Add(Button3)
         Controls.Add(Button2)
         Controls.Add(Button1)
@@ -352,6 +404,8 @@ Partial Class frm_asiganr
         Controls.Add(dgv_matri)
         Controls.Add(dgv_pend)
         Controls.Add(dgv_apro)
+        DoubleBuffered = True
+        FormBorderStyle = FormBorderStyle.None
         Name = "frm_asiganr"
         Text = "frm_asiganr"
         CType(dgv_apro, ComponentModel.ISupportInitialize).EndInit()
@@ -383,15 +437,16 @@ Partial Class frm_asiganr
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents btn_matriculadas_aprobadas As Button
-    Friend WithEvents Button5 As Button
-    Friend WithEvents Button6 As Button
+    Friend WithEvents btn_matri_pend As Button
+    Friend WithEvents btn_pend_matri As Button
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
-    Friend WithEvents lbl_porcentaje As Label
+    Friend WithEvents lbl_porc_apro As Label
     Friend WithEvents btn_buscar As Button
     Friend WithEvents pb_aprobadas As ProgressBar
-    Friend WithEvents pb_pendientes As ProgressBar
-    Friend WithEvents pb_matriculadas As ProgressBar
+    Friend WithEvents Label7 As Label
     Friend WithEvents lbl_materia_matri As Label
+    Friend WithEvents lbl_materia_pend As Label
+    Friend WithEvents lbl_materia_apro As Label
 End Class
