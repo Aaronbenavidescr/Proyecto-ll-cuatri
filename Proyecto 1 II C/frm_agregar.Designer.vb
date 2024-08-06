@@ -45,15 +45,7 @@ Partial Class frm_agregar
         Correo = New DataGridViewTextBoxColumn()
         FechaIngreso = New DataGridViewTextBoxColumn()
         Carrera = New DataGridViewTextBoxColumn()
-        DataGridView2 = New DataGridView()
-        id_carrera = New DataGridViewTextBoxColumn()
-        Materia = New DataGridViewTextBoxColumn()
-        Codigo = New DataGridViewTextBoxColumn()
-        Creditos = New DataGridViewTextBoxColumn()
-        Requisito = New DataGridViewTextBoxColumn()
-        Nombre_requisito = New DataGridViewTextBoxColumn()
         CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
-        CType(DataGridView2, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' lbl_codigo_materia
@@ -224,9 +216,9 @@ Partial Class frm_agregar
         DataGridView1.BackgroundColor = SystemColors.MenuHighlight
         DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridView1.Columns.AddRange(New DataGridViewColumn() {ID, Nombre, Identificacion, Correo, FechaIngreso, Carrera})
-        DataGridView1.Location = New Point(3, 420)
+        DataGridView1.Location = New Point(3, 460)
         DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(1224, 155)
+        DataGridView1.Size = New Size(1224, 318)
         DataGridView1.TabIndex = 74
         ' 
         ' ID
@@ -265,52 +257,6 @@ Partial Class frm_agregar
         Carrera.HeaderText = "Carrera"
         Carrera.Name = "Carrera"
         ' 
-        ' DataGridView2
-        ' 
-        DataGridView2.BackgroundColor = SystemColors.MenuHighlight
-        DataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView2.Columns.AddRange(New DataGridViewColumn() {id_carrera, Materia, Codigo, Creditos, Requisito, Nombre_requisito})
-        DataGridView2.Location = New Point(3, 629)
-        DataGridView2.Name = "DataGridView2"
-        DataGridView2.Size = New Size(1224, 145)
-        DataGridView2.TabIndex = 75
-        ' 
-        ' id_carrera
-        ' 
-        id_carrera.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        id_carrera.HeaderText = "Carrera"
-        id_carrera.Name = "id_carrera"
-        ' 
-        ' Materia
-        ' 
-        Materia.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Materia.HeaderText = "Materia"
-        Materia.Name = "Materia"
-        ' 
-        ' Codigo
-        ' 
-        Codigo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Codigo.HeaderText = "Codigo"
-        Codigo.Name = "Codigo"
-        ' 
-        ' Creditos
-        ' 
-        Creditos.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Creditos.HeaderText = "Creditos"
-        Creditos.Name = "Creditos"
-        ' 
-        ' Requisito
-        ' 
-        Requisito.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Requisito.HeaderText = "Requisito"
-        Requisito.Name = "Requisito"
-        ' 
-        ' Nombre_requisito
-        ' 
-        Nombre_requisito.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Nombre_requisito.HeaderText = "Nombre requisito"
-        Nombre_requisito.Name = "Nombre_requisito"
-        ' 
         ' frm_agregar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -318,7 +264,6 @@ Partial Class frm_agregar
         BackgroundImage = My.Resources.Resources.fondo_loggin
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1228, 777)
-        Controls.Add(DataGridView2)
         Controls.Add(DataGridView1)
         Controls.Add(lbl_codigo_materia)
         Controls.Add(btn_eliminar)
@@ -341,7 +286,6 @@ Partial Class frm_agregar
         Name = "frm_agregar"
         Text = "frm_agregar"
         CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
-        CType(DataGridView2, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -363,17 +307,10 @@ Partial Class frm_agregar
     Friend WithEvents lbl_identificacion As Label
     Friend WithEvents lbl_nombre As Label
     Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents DataGridView2 As DataGridView
     Friend WithEvents ID As DataGridViewTextBoxColumn
     Friend WithEvents Nombre As DataGridViewTextBoxColumn
     Friend WithEvents Identificacion As DataGridViewTextBoxColumn
     Friend WithEvents Correo As DataGridViewTextBoxColumn
     Friend WithEvents FechaIngreso As DataGridViewTextBoxColumn
     Friend WithEvents Carrera As DataGridViewTextBoxColumn
-    Friend WithEvents id_carrera As DataGridViewTextBoxColumn
-    Friend WithEvents Materia As DataGridViewTextBoxColumn
-    Friend WithEvents Codigo As DataGridViewTextBoxColumn
-    Friend WithEvents Creditos As DataGridViewTextBoxColumn
-    Friend WithEvents Requisito As DataGridViewTextBoxColumn
-    Friend WithEvents Nombre_requisito As DataGridViewTextBoxColumn
 End Class

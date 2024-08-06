@@ -22,6 +22,7 @@ Partial Class frm_asiganr
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         dgv_apro = New DataGridView()
         ID_Materia = New DataGridViewTextBoxColumn()
         Nombre_materia = New DataGridViewTextBoxColumn()
@@ -44,7 +45,7 @@ Partial Class frm_asiganr
         Label5 = New Label()
         Label6 = New Label()
         Button1 = New Button()
-        Button2 = New Button()
+        btn_pend_apro = New Button()
         Button3 = New Button()
         btn_matriculadas_aprobadas = New Button()
         btn_matri_pend = New Button()
@@ -56,9 +57,13 @@ Partial Class frm_asiganr
         lbl_materia_matri = New Label()
         lbl_materia_pend = New Label()
         lbl_materia_apro = New Label()
+        txt_nota_obtenida = New TextBox()
+        Label8 = New Label()
+        ErrorProvider1 = New ErrorProvider(components)
         CType(dgv_apro, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgv_pend, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgv_matri, ComponentModel.ISupportInitialize).BeginInit()
+        CType(ErrorProvider1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' dgv_apro
@@ -255,14 +260,14 @@ Partial Class frm_asiganr
         Button1.Text = "Pendiente >"
         Button1.UseVisualStyleBackColor = True
         ' 
-        ' Button2
+        ' btn_pend_apro
         ' 
-        Button2.Location = New Point(335, 510)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(85, 23)
-        Button2.TabIndex = 13
-        Button2.Text = "< Aprobadas"
-        Button2.UseVisualStyleBackColor = True
+        btn_pend_apro.Location = New Point(335, 510)
+        btn_pend_apro.Name = "btn_pend_apro"
+        btn_pend_apro.Size = New Size(85, 23)
+        btn_pend_apro.TabIndex = 13
+        btn_pend_apro.Text = "< Aprobadas"
+        btn_pend_apro.UseVisualStyleBackColor = True
         ' 
         ' Button3
         ' 
@@ -306,7 +311,7 @@ Partial Class frm_asiganr
         lbl_porc_apro.BackColor = Color.Transparent
         lbl_porc_apro.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         lbl_porc_apro.ForeColor = Color.White
-        lbl_porc_apro.Location = New Point(696, 112)
+        lbl_porc_apro.Location = New Point(664, 29)
         lbl_porc_apro.Name = "lbl_porc_apro"
         lbl_porc_apro.Size = New Size(22, 18)
         lbl_porc_apro.TabIndex = 18
@@ -325,7 +330,7 @@ Partial Class frm_asiganr
         ' 
         ' pb_aprobadas
         ' 
-        pb_aprobadas.Location = New Point(573, 111)
+        pb_aprobadas.Location = New Point(558, 27)
         pb_aprobadas.Name = "pb_aprobadas"
         pb_aprobadas.Size = New Size(100, 23)
         pb_aprobadas.TabIndex = 20
@@ -336,7 +341,7 @@ Partial Class frm_asiganr
         Label7.BackColor = Color.Transparent
         Label7.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label7.ForeColor = Color.White
-        Label7.Location = New Point(433, 112)
+        Label7.Location = New Point(421, 32)
         Label7.Name = "Label7"
         Label7.Size = New Size(114, 18)
         Label7.TabIndex = 24
@@ -372,6 +377,29 @@ Partial Class frm_asiganr
         lbl_materia_apro.Text = "Label9"
         lbl_materia_apro.Visible = False
         ' 
+        ' txt_nota_obtenida
+        ' 
+        txt_nota_obtenida.Location = New Point(558, 127)
+        txt_nota_obtenida.Name = "txt_nota_obtenida"
+        txt_nota_obtenida.Size = New Size(100, 23)
+        txt_nota_obtenida.TabIndex = 28
+        ' 
+        ' Label8
+        ' 
+        Label8.AutoSize = True
+        Label8.BackColor = Color.Transparent
+        Label8.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label8.ForeColor = Color.White
+        Label8.Location = New Point(421, 132)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(106, 18)
+        Label8.TabIndex = 29
+        Label8.Text = "Nota obtenida"
+        ' 
+        ' ErrorProvider1
+        ' 
+        ErrorProvider1.ContainerControl = Me
+        ' 
         ' frm_asiganr
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -379,6 +407,8 @@ Partial Class frm_asiganr
         BackgroundImage = My.Resources.Resources.fondo_loggin
         BackgroundImageLayout = ImageLayout.Stretch
         ClientSize = New Size(1212, 738)
+        Controls.Add(Label8)
+        Controls.Add(txt_nota_obtenida)
         Controls.Add(lbl_materia_apro)
         Controls.Add(lbl_materia_pend)
         Controls.Add(lbl_materia_matri)
@@ -390,7 +420,7 @@ Partial Class frm_asiganr
         Controls.Add(btn_matri_pend)
         Controls.Add(btn_pend_matri)
         Controls.Add(Button3)
-        Controls.Add(Button2)
+        Controls.Add(btn_pend_apro)
         Controls.Add(Button1)
         Controls.Add(Label6)
         Controls.Add(Label5)
@@ -411,6 +441,7 @@ Partial Class frm_asiganr
         CType(dgv_apro, ComponentModel.ISupportInitialize).EndInit()
         CType(dgv_pend, ComponentModel.ISupportInitialize).EndInit()
         CType(dgv_matri, ComponentModel.ISupportInitialize).EndInit()
+        CType(ErrorProvider1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -434,7 +465,7 @@ Partial Class frm_asiganr
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents btn_pend_apro As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents btn_matriculadas_aprobadas As Button
     Friend WithEvents btn_matri_pend As Button
@@ -449,4 +480,7 @@ Partial Class frm_asiganr
     Friend WithEvents lbl_materia_matri As Label
     Friend WithEvents lbl_materia_pend As Label
     Friend WithEvents lbl_materia_apro As Label
+    Friend WithEvents txt_nota_obtenida As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents ErrorProvider1 As ErrorProvider
 End Class
