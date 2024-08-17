@@ -64,4 +64,13 @@ Public Class frm_menu
     Private Sub btn_asignar_Click(sender As Object, e As EventArgs) Handles btn_asignar.Click
         abrirformhijo(New frm_asiganr)
     End Sub
+
+    Private Sub btn_estudidantes_Click(sender As Object, e As EventArgs) Handles btn_estudidantes.Click
+        abrirformhijo(New frm_estudiantes)
+    End Sub
+
+    Private Sub btn_salir_Click_1(sender As Object, e As EventArgs) Handles btn_salir.Click
+        Me.Hide()
+        frm_usuario.Show()
+    End Sub
 End Class

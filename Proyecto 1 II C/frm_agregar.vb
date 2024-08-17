@@ -15,6 +15,7 @@ Public Class frm_agregar
     Private Sub frm_agregar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         cargarestudiantes()
+        cargarmaterias()
     End Sub
 
     Sub cargarestudiantes()
@@ -80,9 +81,8 @@ Public Class frm_agregar
     End Function
 
     Sub agregarEstudiante()
-
         Dim fechahoraactual As DateTime = DateTime.Now
-        Dim fechaFormateada As String = fechahoraactual.ToString("yyyy/MM/dd HH:mm:ss")
+        Dim fechaFormateada As String = fechahoraactual.ToString("yyyy-MM-dd HH:mm:ss")
         txt_fecha_ingreso.Text = fechaFormateada
 
         DataGridView1.Rows.Clear()
@@ -107,6 +107,7 @@ Public Class frm_agregar
             conn.Open()
             transaction = conn.BeginTransaction()
 
+            ' Insertar el nuevo estudiante y obtener el ID
             Dim cmd As New MySqlCommand("INSERT INTO estudiante (nombre_apellidos, identificacion, correo, fecha_ingreso, carrera) 
                                     VALUES (@nombre_apellidos, @identificacion, @correo, @fecha_ingreso, @carrera); SELECT LAST_INSERT_ID();", conn)
             cmd.Transaction = transaction
@@ -114,11 +115,12 @@ Public Class frm_agregar
             cmd.Parameters.AddWithValue("@nombre_apellidos", txt_nombre.Text)
             cmd.Parameters.AddWithValue("@identificacion", txt_identificacion.Text)
             cmd.Parameters.AddWithValue("@correo", txt_correo.Text)
-            cmd.Parameters.AddWithValue("@fecha_ingreso", txt_fecha_ingreso.Text)
+            cmd.Parameters.AddWithValue("@fecha_ingreso", fechaFormateada)
             cmd.Parameters.AddWithValue("@carrera", opcionSeleccionada)
 
             Dim idEstudiante As Integer = Convert.ToInt32(cmd.ExecuteScalar())
 
+            ' Insertar materias seleccionadas
             For Each row As DataGridViewRow In DataGridView2.Rows
                 If Not row.IsNewRow Then
                     Dim cmdMaterias As New MySqlCommand("INSERT INTO estudiante_materia (ident_estudiante, id_materia, estado, nota) 
@@ -132,6 +134,23 @@ Public Class frm_agregar
                     cmdMaterias.ExecuteNonQuery()
                 End If
             Next
+
+            ' Obtener el ID de la materia "Admitido"
+            Dim idMateriaAdmitidoCmd As New MySqlCommand("SELECT codigo FROM materia WHERE nombre = 'ADMITIDO EN UNIVERSIDAD'", conn)
+            idMateriaAdmitidoCmd.Transaction = transaction
+            Dim idMateriaAdmitido As Object = idMateriaAdmitidoCmd.ExecuteScalar()
+
+            If idMateriaAdmitido IsNot Nothing Then
+                ' Actualizar la materia "Admitido" para el nuevo estudiante
+                Dim updateMateriaAdmitidoCmd As New MySqlCommand("UPDATE estudiante_materia 
+            SET estado = 1, nota = 100 
+            WHERE ident_estudiante = @ident_estudiante AND id_materia = @id_materia", conn)
+                updateMateriaAdmitidoCmd.Transaction = transaction
+                updateMateriaAdmitidoCmd.Parameters.Clear()
+                updateMateriaAdmitidoCmd.Parameters.AddWithValue("@ident_estudiante", txt_identificacion.Text)
+                updateMateriaAdmitidoCmd.Parameters.AddWithValue("@id_materia", idMateriaAdmitido)
+                updateMateriaAdmitidoCmd.ExecuteNonQuery()
+            End If
 
             transaction.Commit()
 
@@ -159,99 +178,98 @@ Public Class frm_agregar
 
 
 
-    Sub editarestudiante()
 
+
+
+    Sub editarestudiante()
         DataGridView1.Rows.Clear()
         Dim opcionSeleccionada As Integer
         Select Case cbx_carrera.SelectedIndex
-            Case 0 ' Ingenieria en sistemas
+            Case 0 ' Ingeniería en sistemas
                 opcionSeleccionada = 1
-            Case 1 ' Ingenieria industrial
+            Case 1 ' Ingeniería industrial
                 opcionSeleccionada = 2
-            Case 2 ' Contaduria
+            Case 2 ' Contaduría
                 opcionSeleccionada = 3
-            Case 3 ' Administracion de negocios
+            Case 3 ' Administración de negocios
                 opcionSeleccionada = 4
         End Select
 
         Dim transaction As MySqlTransaction = Nothing
 
         Try
-                If conn.State = ConnectionState.Open Then
-                    conn.Close()
-                End If
-                conn.Open()
-                Transaction = conn.BeginTransaction()
-
-                Dim cmd As New MySqlCommand("UPDATE estudiante SET nombre_apellidos=@nombre_apellidos, identificacion=@identificacion, correo=@correo, fecha_ingreso=@fecha_ingreso, carrera=@carrera WHERE id= @id", conn)
-
-                cmd.Parameters.Clear()
-                cmd.Parameters.AddWithValue("@nombre_apellidos", txt_nombre.Text)
-                cmd.Parameters.AddWithValue("@identificacion", txt_identificacion.Text)
-                cmd.Parameters.AddWithValue("@correo", txt_correo.Text)
-                cmd.Parameters.AddWithValue("@fecha_ingreso", txt_fecha_ingreso.Text)
-                cmd.Parameters.AddWithValue("@carrera", opcionSeleccionada)
-                cmd.Parameters.AddWithValue("@id", lbl_id.Text)
-
-            Dim i = cmd.ExecuteNonQuery
-
-            conn.Close()
-
-            Try
-                conn.Open()
-                Dim cmd1 As New MySqlCommand("DELETE FROM estudiante_materia WHERE ident_estudiante=@ident_estudiante;", conn)
-                cmd1.Parameters.AddWithValue("@ident_estudiante", txt_identificacion.Text)
-
-                Dim o = cmd1.ExecuteNonQuery()
-
-                If o > 0 Then
-                    DataGridView1.Rows.Clear()
-                End If
-            Catch ex As Exception
-            Finally
+            If conn.State = ConnectionState.Open Then
                 conn.Close()
-            End Try
-
+            End If
             conn.Open()
-            Dim idEstudiante As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+            transaction = conn.BeginTransaction()
 
-                For Each row As DataGridViewRow In DataGridView2.Rows
-                    If Not row.IsNewRow Then
-                        Dim cmdMaterias As New MySqlCommand("INSERT INTO estudiante_materia (ident_estudiante, id_materia, estado, nota) 
-                                                    VALUES (@ident_estudiante, @id_materia, @estado, @nota)", conn)
-                        cmdMaterias.Transaction = Transaction
-                        cmdMaterias.Parameters.Clear()
-                        cmdMaterias.Parameters.AddWithValue("@ident_estudiante", txt_identificacion.Text)
-                        cmdMaterias.Parameters.AddWithValue("@id_materia", row.Cells("Codigo").Value)
-                        cmdMaterias.Parameters.AddWithValue("@estado", 3)
-                        cmdMaterias.Parameters.AddWithValue("@nota", 0)
-                        cmdMaterias.ExecuteNonQuery()
-                    End If
-                Next
+            ' Obtener la cédula anterior antes de actualizar
+            Dim cedulaAnterior As String = ""
+            Dim cmdGetCedulaAnterior As New MySqlCommand("SELECT identificacion, fecha_ingreso FROM estudiante WHERE id = @id", conn)
+            cmdGetCedulaAnterior.Parameters.AddWithValue("@id", lbl_id.Text)
+            Dim reader = cmdGetCedulaAnterior.ExecuteReader()
+            If reader.Read() Then
+                cedulaAnterior = reader("identificacion").ToString()
+                txt_fecha_ingreso.Text = Convert.ToDateTime(reader("fecha_ingreso")).ToString("yyyy-MM-dd HH:mm:ss")
+            End If
+            reader.Close()
+
+            ' Actualizar los datos del estudiante
+            Dim cmd As New MySqlCommand("UPDATE estudiante SET nombre_apellidos=@nombre_apellidos, identificacion=@identificacion, correo=@correo, fecha_ingreso=@fecha_ingreso, carrera=@carrera WHERE id= @id", conn)
+            cmd.Transaction = transaction
+            cmd.Parameters.Clear()
+            cmd.Parameters.AddWithValue("@nombre_apellidos", txt_nombre.Text)
+            cmd.Parameters.AddWithValue("@identificacion", txt_identificacion.Text)
+            cmd.Parameters.AddWithValue("@correo", txt_correo.Text)
+            cmd.Parameters.AddWithValue("@fecha_ingreso", txt_fecha_ingreso.Text)
+            cmd.Parameters.AddWithValue("@carrera", opcionSeleccionada)
+            cmd.Parameters.AddWithValue("@id", lbl_id.Text)
+
+            Dim i = cmd.ExecuteNonQuery()
+
+            ' Si la cédula ha cambiado, transferir materias a la nueva cédula
+            If txt_identificacion.Text <> cedulaAnterior Then
+                ' Borrar las materias asociadas a la cédula nueva en caso de que ya existan
+                Dim cmdDeleteMateriasNuevaCedula As New MySqlCommand("DELETE FROM estudiante_materia WHERE ident_estudiante = @nuevaCedula", conn)
+                cmdDeleteMateriasNuevaCedula.Transaction = transaction
+                cmdDeleteMateriasNuevaCedula.Parameters.AddWithValue("@nuevaCedula", txt_identificacion.Text)
+                cmdDeleteMateriasNuevaCedula.ExecuteNonQuery()
+
+                ' Transferir materias a la nueva cédula
+                Dim cmdUpdateMaterias As New MySqlCommand("UPDATE estudiante_materia SET ident_estudiante = @nuevaCedula WHERE ident_estudiante = @cedulaAnterior", conn)
+                cmdUpdateMaterias.Transaction = transaction
+                cmdUpdateMaterias.Parameters.AddWithValue("@nuevaCedula", txt_identificacion.Text)
+                cmdUpdateMaterias.Parameters.AddWithValue("@cedulaAnterior", cedulaAnterior)
+                cmdUpdateMaterias.ExecuteNonQuery()
+            End If
 
             transaction.Commit()
+
             MessageBox.Show("Estudiante modificado", "Modificado", MessageBoxButtons.OK, MessageBoxIcon.Information)
             DataGridView1.Rows.Clear()
-                conn.Close()
-                cargarestudiantes()
-                cargarmaterias()
-                LimpiarCampos()
-            Catch ex As Exception
-                MsgBox(ex.Message)
-                If Transaction IsNot Nothing Then
-                    Try
-                        Transaction.Rollback()
-                    Catch ex2 As Exception
-                        MsgBox("Error" & ex2.Message)
-                    End Try
-                End If
-            Finally
-                If conn IsNot Nothing AndAlso conn.State = ConnectionState.Open Then
-                    conn.Close()
-                End If
-            End Try
+            conn.Close()
+            cargarestudiantes()
+            cargarmaterias()
+            LimpiarCampos()
 
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            If transaction IsNot Nothing Then
+                Try
+                    transaction.Rollback()
+                Catch ex2 As Exception
+                    MsgBox("Error" & ex2.Message)
+                End Try
+            End If
+        Finally
+            If conn IsNot Nothing AndAlso conn.State = ConnectionState.Open Then
+                conn.Close()
+            End If
+        End Try
     End Sub
+
+
 
     Private Sub btn_modificar_Click(sender As Object, e As EventArgs) Handles btn_modificar.Click
 

@@ -14,12 +14,13 @@ Public Class frm_asiganr
         Try
             conn.Open()
 
-            Dim cmd As New MySqlCommand("SELECT * FROM vista_estudiante_materia WHERE identificacion = @identificacion AND Estado = 1", conn)
+            ' Modificar la consulta para excluir la materia con ID "Admitido"
+            Dim cmd As New MySqlCommand("SELECT * FROM vista_estudiante_materia WHERE identificacion = @identificacion AND Estado = 1 AND `ID Materia` != 'Admitido'", conn)
             cmd.Parameters.AddWithValue("@identificacion", identificacionEstudiante)
             Dim dr = cmd.ExecuteReader()
 
             While dr.Read()
-                dgv_apro.Rows.Add(dr("ID Materia"), dr("Nombre materia"), "Aprobado")
+                dgv_apro.Rows.Add(dr("ID Materia"), dr("Nombre materia"), dr("Requisitos"))
             End While
 
             dr.Close()
@@ -30,9 +31,10 @@ Public Class frm_asiganr
         End Try
     End Sub
 
+
     ' Cargar materias pendientes (Estado = 2)
-    Private Sub CargarMateriasPendientes(identificacionEstudiante As String)
-        dgv_pend.Rows.Clear()
+    Private Sub CargarMateriasMatriculadas(identificacionEstudiante As String)
+        dgv_matric.Rows.Clear()
 
         Try
             conn.Open()
@@ -42,20 +44,20 @@ Public Class frm_asiganr
             Dim dr = cmd.ExecuteReader()
 
             While dr.Read()
-                dgv_pend.Rows.Add(dr("ID Materia"), dr("Nombre materia"), "Pendiente")
+                dgv_matric.Rows.Add(dr("ID Materia"), dr("Nombre materia"), dr("Requisitos"))
             End While
 
             dr.Close()
         Catch ex As Exception
-            MessageBox.Show("Error al cargar materias pendientes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al cargar materias matriculadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
     End Sub
 
     ' Cargar materias matriculadas (Estado = 3)
-    Private Sub CargarMateriasMatriculadas(identificacionEstudiante As String)
-        dgv_matri.Rows.Clear()
+    Private Sub CargarMateriasPendientes(identificacionEstudiante As String)
+        dgv_pendie.Rows.Clear()
 
         Try
             conn.Open()
@@ -65,12 +67,12 @@ Public Class frm_asiganr
             Dim dr = cmd.ExecuteReader()
 
             While dr.Read()
-                dgv_matri.Rows.Add(dr("ID Materia"), dr("Nombre materia"), "Matriculado")
+                dgv_pendie.Rows.Add(dr("ID Materia"), dr("Nombre materia"), dr("Requisitos"))
             End While
 
             dr.Close()
         Catch ex As Exception
-            MessageBox.Show("Error al cargar materias matriculadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al cargar materias pendientes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
@@ -141,92 +143,170 @@ Public Class frm_asiganr
         End Try
     End Sub
 
-
-    ' Función para calcular y mostrar el porcentaje total de materias
-    Private Sub MostrarPorcentaje()
-        Dim totalMaterias As Integer = dgv_apro.Rows.Count + dgv_pend.Rows.Count + dgv_matri.Rows.Count
-
-        If totalMaterias > 0 Then
-            Dim porcentajeAprobadas As Double = (dgv_apro.Rows.Count / totalMaterias) * 100
-            Dim porcentajePendientes As Double = (dgv_pend.Rows.Count / totalMaterias) * 100
-            Dim porcentajeMatriculadas As Double = (dgv_matri.Rows.Count / totalMaterias) * 100
-
-            ' Actualizar las barras de progreso
-            pb_aprobadas.Value = Convert.ToInt32(porcentajeAprobadas)
-
-        Else
-            ' Manejo si no hay materias cargadas
-            pb_aprobadas.Value = 0
-
-        End If
-    End Sub
-
-    ' Función para calcular y mostrar el porcentaje de avance en la carrera
-    Private Sub MostrarPorcentajeGanado()
-        Dim totalPendientesYMatriculadas As Double = dgv_pend.Rows.Count + dgv_matri.Rows.Count
-
-        If totalPendientesYMatriculadas > 0 Then
-            Dim porcentajeGanado As Double = (dgv_apro.Rows.Count / totalPendientesYMatriculadas) * 100
-            lbl_porc_apro.Text = porcentajeGanado.ToString("0.00") & "%"
-        Else
-            lbl_porc_apro.Text = "0%"
-        End If
-    End Sub
-
-    Private Sub CambiarEstadoMatriculadasAprobadas(identificacionEstudiante As String)
-        Try
-            ' Verificar si la nota ingresada es 70 o superior
-            Dim nota As Integer
-            If Integer.TryParse(txt_nota_obtenida.Text.Trim(), nota) AndAlso nota >= 70 Then
-                conn.Open()
-
-                ' Actualizar el estado de la materia y la nota en la base de datos
-                Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 1, nota = @nota WHERE id_materia = @id_materia AND Estado = 3 AND ident_estudiante = @identificacion", conn)
-                cmd.Parameters.AddWithValue("@id_materia", lbl_materia_matri.Text)
-                cmd.Parameters.AddWithValue("@nota", nota)
-                cmd.Parameters.AddWithValue("@identificacion", identificacionEstudiante)
-                cmd.ExecuteNonQuery()
-
-                MessageBox.Show("Estado de materia matriculada cambiado a aprobada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                MessageBox.Show("La nota debe ser 70 o superior para aprobar la materia.", "Nota Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            End If
-        Catch ex As Exception
-            MessageBox.Show("Error al cambiar estado de materias matriculadas a aprobadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Finally
-            conn.Close()
-        End Try
-    End Sub
-
-    Private Sub CambiarEstadoMatriculadaspendientes(identificacionEstudiante As String)
+    Private Sub CambiarEstadoPendienteAprobadas(identificacionEstudiante As String)
         Try
             conn.Open()
 
-            Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 2 WHERE id_materia = @id_materia AND Estado = 3 AND ident_estudiante = @ident_estudiante", conn)
-            cmd.Parameters.AddWithValue("@id_materia", lbl_materia_matri.Text)
-            cmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
-            cmd.ExecuteNonQuery()
+            ' Obtener el ID del requisito desde la tabla materia
+            Dim requisitoIdCmd As New MySqlCommand("
+            SELECT requisito 
+            FROM materia 
+            WHERE codigo = @id_materia", conn)
+            requisitoIdCmd.Parameters.AddWithValue("@id_materia", lbl_materia_pendie.Text)
 
-            MessageBox.Show("Estado de materia matriculada cambiado a pendiente correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Dim requisitoId As Object = requisitoIdCmd.ExecuteScalar()
+
+            If requisitoId IsNot Nothing Then
+                ' Verificar el estado de la materia de requisito en estudiante_materia
+                Dim checkReqCmd As New MySqlCommand("
+                SELECT estado 
+                FROM estudiante_materia 
+                WHERE id_materia = @id_requisito 
+                AND ident_estudiante = @ident_estudiante", conn)
+                checkReqCmd.Parameters.AddWithValue("@id_requisito", requisitoId)
+                checkReqCmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
+
+                Dim reqEstado As Object = checkReqCmd.ExecuteScalar()
+
+                If reqEstado IsNot Nothing AndAlso Convert.ToInt32(reqEstado) = 1 Then
+                    ' Verificar si la nota ingresada es 70 o superior
+                    Dim nota As Integer
+                    If Integer.TryParse(txt_nota_obtenida.Text.Trim(), nota) AndAlso nota >= 70 Then
+
+
+                        ' Actualizar el estado de la materia y la nota en la base de datos
+                        Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 1, nota = @nota WHERE id_materia = @id_materia AND Estado = 3 AND ident_estudiante = @identificacion", conn)
+                        cmd.Parameters.AddWithValue("@id_materia", lbl_materia_pendie.Text)
+                        cmd.Parameters.AddWithValue("@nota", nota)
+                        cmd.Parameters.AddWithValue("@identificacion", identificacionEstudiante)
+                        cmd.ExecuteNonQuery()
+
+                        MessageBox.Show("Estado de materia cambiado a aprobada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Else
+                        MessageBox.Show("La nota debe ser 70 o superior para aprobar la materia.", "Nota Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    End If
+                Else
+                    ' Mostrar mensaje si el estado del requisito no es 1
+                    MessageBox.Show("No se puede aprobar la materia porque el estado del requisito no está aprobado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            Else
+                MessageBox.Show("No se encontró el requisito para la materia.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+
+        Catch ex As MySqlException
+            MessageBox.Show("Error de base de datos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
-            MessageBox.Show("Error al cambiar estado de materias matriculadas a pendientes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al cambiar estado de materia a aprobada: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
     End Sub
 
-    Private Sub CambiarEstadopendientematriculada(identificacionEstudiante As String)
+    Private Sub CambiarEstadoPendienteAMatriculada(identificacionEstudiante As String)
+        Try
+            conn.Open()
+
+            ' Obtener el ID del requisito desde la tabla materia
+            Dim requisitoIdCmd As New MySqlCommand("
+            SELECT requisito 
+            FROM materia 
+            WHERE codigo = @id_materia", conn)
+            requisitoIdCmd.Parameters.AddWithValue("@id_materia", lbl_materia_pendie.Text)
+
+            Dim requisitoId As Object = requisitoIdCmd.ExecuteScalar()
+
+            If requisitoId IsNot Nothing Then
+                ' Verificar el estado de la materia de requisito en estudiante_materia
+                Dim checkReqCmd As New MySqlCommand("
+                SELECT estado 
+                FROM estudiante_materia 
+                WHERE id_materia = @id_requisito 
+                AND ident_estudiante = @ident_estudiante", conn)
+                checkReqCmd.Parameters.AddWithValue("@id_requisito", requisitoId)
+                checkReqCmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
+
+                Dim reqEstado As Object = checkReqCmd.ExecuteScalar()
+
+                If reqEstado IsNot Nothing AndAlso Convert.ToInt32(reqEstado) = 1 Then
+                    ' Si el estado del requisito es 1, realizar la actualización
+                    Dim updateCmd As New MySqlCommand("
+                    UPDATE estudiante_materia 
+                    SET estado = 2 
+                    WHERE id_materia = @id_materia 
+                    AND estado = 3 
+                    AND ident_estudiante = @ident_estudiante", conn)
+                    updateCmd.Parameters.AddWithValue("@id_materia", lbl_materia_pendie.Text)
+                    updateCmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
+                    updateCmd.ExecuteNonQuery()
+
+                    MessageBox.Show("Estado de materia cambiado a matriculada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    ' Mostrar mensaje si el estado del requisito no es 1
+                    MessageBox.Show("No se puede matricular la materia porque el estado del requisito no está aprobado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                End If
+            Else
+                MessageBox.Show("No se encontró el requisito para la materia.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+
+        Catch ex As MySqlException
+            MessageBox.Show("Error de base de datos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            MessageBox.Show("Error al cambiar estado de materias pendientes a matriculadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+
+    Private Sub CambiarEstadoMatriculadaApendiente(identificacionEstudiante As String)
         Try
             conn.Open()
 
             Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 3 WHERE id_materia = @id_materia AND Estado = 2 AND ident_estudiante = @ident_estudiante", conn)
-            cmd.Parameters.AddWithValue("@id_materia", lbl_materia_pend.Text)
+            cmd.Parameters.AddWithValue("@id_materia", lbl_materia_matric.Text)
             cmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
             cmd.ExecuteNonQuery()
 
-            MessageBox.Show("Estado de materia pendiente cambiado a matriculada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Estado de materia cambiado a pendiente correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
-            MessageBox.Show("Error al cambiar estado de materias pendientes a matriculadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al cambiar estado de materia a pendiente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub CambiarEstadoaprobadaAmatriculada(identificacionEstudiante As String)
+        Try
+            conn.Open()
+
+            Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 2, nota=0 WHERE id_materia = @id_materia AND Estado = 1 AND ident_estudiante = @ident_estudiante", conn)
+            cmd.Parameters.AddWithValue("@id_materia", lbl_materia_apro.Text)
+            cmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
+            cmd.ExecuteNonQuery()
+
+            MessageBox.Show("Estado de materia cambiado a matriculada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As Exception
+            MessageBox.Show("Error al cambiar estado de materia a matriculada: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+    Private Sub CambiarEstadomatriculadaaprobada(identificacionEstudiante As String)
+        Try
+            Dim nota As Integer
+            If Integer.TryParse(txt_nota_obtenida.Text.Trim(), nota) AndAlso nota >= 70 Then
+                conn.Open()
+                Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 1, nota = @nota WHERE id_materia = @id_materia AND Estado = 2 AND ident_estudiante = @identificacion", conn)
+                cmd.Parameters.AddWithValue("@id_materia", lbl_materia_matric.Text)
+                cmd.Parameters.AddWithValue("@nota", nota)
+                cmd.Parameters.AddWithValue("@identificacion", identificacionEstudiante)
+                cmd.ExecuteNonQuery()
+                MessageBox.Show("Estado de materia cambiado a aprobada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Else
+                MessageBox.Show("La nota debe ser 70 o superior para aprobar la materia.", "Nota Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error al cambiar estado de materia a aprobada: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
@@ -236,51 +316,14 @@ Public Class frm_asiganr
         Try
             conn.Open()
 
-            Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 2 WHERE id_materia = @id_materia AND Estado = 1 AND ident_estudiante = @ident_estudiante", conn)
+            Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 3, nota=0 WHERE id_materia = @id_materia AND Estado = 1 AND ident_estudiante = @ident_estudiante", conn)
             cmd.Parameters.AddWithValue("@id_materia", lbl_materia_apro.Text)
             cmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
             cmd.ExecuteNonQuery()
 
-            MessageBox.Show("Estado de materia aprobada cambiado a pendiente correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Estado de materia cambiado a pendiente correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
-            MessageBox.Show("Error al cambiar estado de materias aprobadas a pendientes: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Finally
-            conn.Close()
-        End Try
-    End Sub
-    Private Sub CambiarEstadopendienteaprobada(identificacionEstudiante As String)
-        Try
-            Dim nota As Integer
-            If Integer.TryParse(txt_nota_obtenida.Text.Trim(), nota) AndAlso nota >= 70 Then
-                conn.Open()
-                Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 1, nota = @nota WHERE id_materia = @id_materia AND Estado = 2 AND ident_estudiante = @identificacion", conn)
-                cmd.Parameters.AddWithValue("@id_materia", lbl_materia_pend.Text)
-                cmd.Parameters.AddWithValue("@nota", nota)
-                cmd.Parameters.AddWithValue("@identificacion", identificacionEstudiante)
-                cmd.ExecuteNonQuery()
-                MessageBox.Show("Estado de materia pendiente cambiado a aprobada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Else
-                MessageBox.Show("La nota debe ser 70 o superior para aprobar la materia.", "Nota Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            End If
-        Catch ex As Exception
-            MessageBox.Show("Error al cambiar estado de materias pendientes a aprobadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Finally
-            conn.Close()
-        End Try
-    End Sub
-
-    Private Sub CambiarEstadoaprobadamatriculada(identificacionEstudiante As String)
-        Try
-            conn.Open()
-
-            Dim cmd As New MySqlCommand("UPDATE estudiante_materia SET estado = 3 WHERE id_materia = @id_materia AND Estado = 1 AND ident_estudiante = @ident_estudiante", conn)
-            cmd.Parameters.AddWithValue("@id_materia", lbl_materia_apro.Text)
-            cmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
-            cmd.ExecuteNonQuery()
-
-            MessageBox.Show("Estado de materia aprobada cambiado a matriculada correctamente.", "Estado Actualizado", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Catch ex As Exception
-            MessageBox.Show("Error al cambiar estado de materias aprobadas a matriculadas: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Error al cambiar estado de materia a pendiente: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             conn.Close()
         End Try
@@ -295,8 +338,6 @@ Public Class frm_asiganr
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         Cargarnombreestudiante(identificacionEstudiante)
         CargarCarreraEstudiante(identificacionEstudiante)
 
@@ -307,32 +348,28 @@ Public Class frm_asiganr
     ' Evento para cambiar el estado de materias matriculadas a aprobadas al hacer clic en el botón
     Private Sub btn_matriculadas_aprobadas_Click(sender As Object, e As EventArgs) Handles btn_matriculadas_aprobadas.Click
         Dim identificacionEstudiante As String = txt_identificacion.Text.Trim()
-        CambiarEstadoMatriculadasAprobadas(identificacionEstudiante)
+        CambiarEstadoPendienteAprobadas(identificacionEstudiante)
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         CargarCarreraEstudiante(identificacionEstudiante)
         txt_nota_obtenida.Clear()
 
     End Sub
 
-    Private Sub dgv_matri_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_matri.CellClick
+    Private Sub dgv_matri_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_pendie.CellClick
 
-        lbl_materia_matri.Text = dgv_matri.CurrentRow.Cells(0).Value
+        lbl_materia_pendie.Text = dgv_pendie.CurrentRow.Cells(0).Value
 
     End Sub
 
     Private Sub btn_matri_pend_Click(sender As Object, e As EventArgs) Handles btn_matri_pend.Click
 
         Dim identificacionEstudiante As String = txt_identificacion.Text.Trim()
-        CambiarEstadoMatriculadaspendientes(identificacionEstudiante)
+        CambiarEstadoPendienteAMatriculada(identificacionEstudiante)
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         CargarCarreraEstudiante(identificacionEstudiante)
         txt_nota_obtenida.Clear()
 
@@ -340,59 +377,96 @@ Public Class frm_asiganr
 
     Private Sub btn_pend_matri_Click(sender As Object, e As EventArgs) Handles btn_pend_matri.Click
         Dim identificacionEstudiante As String = txt_identificacion.Text.Trim()
-        CambiarEstadopendientematriculada(identificacionEstudiante)
+        CambiarEstadoMatriculadaApendiente(identificacionEstudiante)
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         CargarCarreraEstudiante(identificacionEstudiante)
         txt_nota_obtenida.Clear()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim identificacionEstudiante As String = txt_identificacion.Text.Trim()
-        CambiarEstadoaprobadapendiente(identificacionEstudiante)
+        CambiarEstadoaprobadaAmatriculada(identificacionEstudiante)
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         CargarCarreraEstudiante(identificacionEstudiante)
         txt_nota_obtenida.Clear()
     End Sub
 
     Private Sub btn_pend_apro_Click(sender As Object, e As EventArgs) Handles btn_pend_apro.Click
         Dim identificacionEstudiante As String = txt_identificacion.Text.Trim()
-        CambiarEstadopendienteaprobada(identificacionEstudiante)
+        CambiarEstadomatriculadaaprobada(identificacionEstudiante)
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         CargarCarreraEstudiante(identificacionEstudiante)
         txt_nota_obtenida.Clear()
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim identificacionEstudiante As String = txt_identificacion.Text.Trim()
-        CambiarEstadoaprobadamatriculada(identificacionEstudiante)
+        CambiarEstadoaprobadapendiente(identificacionEstudiante)
         CargarMateriasAprobadas(identificacionEstudiante)
         CargarMateriasPendientes(identificacionEstudiante)
         CargarMateriasMatriculadas(identificacionEstudiante)
-        MostrarPorcentaje()
-        MostrarPorcentajeGanado()
         CargarCarreraEstudiante(identificacionEstudiante)
         txt_nota_obtenida.Clear()
     End Sub
 
+    Private Sub dgv_apro_SelectionChanged(sender As Object, e As EventArgs) Handles dgv_apro.SelectionChanged
+        ' Verificar que se haya seleccionado una fila
+        If dgv_apro.SelectedRows.Count > 0 Then
+            Dim idMateria As String = dgv_apro.SelectedRows(0).Cells("ID_Materia").Value.ToString()
+            Dim identificacionEstudiante As String = txt_identificacion.Text ' O la variable que contiene la identificación del estudiante
+
+            ' Obtener la nota de la base de datos
+            Dim nota As String = ObtenerNotaMateria(identificacionEstudiante, idMateria)
+            txt_nota_obtenida.Text = nota
+        End If
+    End Sub
+
+    Private Function ObtenerNotaMateria(identificacionEstudiante As String, idMateria As String) As String
+        Dim nota As String = "No disponible"
+        Try
+            conn.Open()
+            Dim cmd As New MySqlCommand("SELECT nota FROM estudiante_materia WHERE ident_estudiante = @ident_estudiante AND id_materia = @id_materia", conn)
+            cmd.Parameters.AddWithValue("@ident_estudiante", identificacionEstudiante)
+            cmd.Parameters.AddWithValue("@id_materia", idMateria)
+
+            Dim result = cmd.ExecuteScalar()
+            If result IsNot Nothing Then
+                nota = result.ToString()
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error al obtener la nota de la materia: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            conn.Close()
+        End Try
+
+        Return nota
+    End Function
 
     Private Sub dgv_apro_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_apro.CellClick
         lbl_materia_apro.Text = dgv_apro.CurrentRow.Cells(0).Value
+
     End Sub
 
-    Private Sub dgv_pend_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_pend.CellClick
-        lbl_materia_pend.Text = dgv_pend.CurrentRow.Cells(0).Value
+    Private Sub dgv_pendie_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_pendie.CellClick
+        lbl_materia_pendie.Text = dgv_pendie.CurrentRow.Cells(0).Value
+    End Sub
+
+    Private Sub dgv_matric_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_matric.CellClick
+        lbl_materia_matric.Text = dgv_matric.CurrentRow.Cells(0).Value
+    End Sub
+
+    Private Sub lbl_materia_matric_Click(sender As Object, e As EventArgs) Handles lbl_materia_matric.Click
+
+    End Sub
+
+    Private Sub dgv_apro_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgv_apro.CellContentClick
+
     End Sub
 End Class
 

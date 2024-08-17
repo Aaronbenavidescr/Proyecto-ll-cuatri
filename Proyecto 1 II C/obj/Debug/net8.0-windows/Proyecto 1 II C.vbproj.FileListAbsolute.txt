@@ -29,9 +29,9 @@ C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-wind
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto 1 II C.genruntimeconfig.cache
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\ref\Proyecto 1 II C.dll
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.frm_usuario.resources
-C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.frm_univer.resources
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.frm_menu.resources
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.Resources.resources
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.frm_agregar.resources
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto 1 II C.sourcelink.json
 C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.frm_asiganr.resources
+C:\Users\User\source\repos\Proyecto 1 II C\Proyecto 1 II C\obj\Debug\net8.0-windows\Proyecto_1_II_C.frm_estudiantes.resources

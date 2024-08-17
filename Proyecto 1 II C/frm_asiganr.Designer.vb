@@ -27,11 +27,11 @@ Partial Class frm_asiganr
         ID_Materia = New DataGridViewTextBoxColumn()
         Nombre_materia = New DataGridViewTextBoxColumn()
         Estado = New DataGridViewTextBoxColumn()
-        dgv_pend = New DataGridView()
+        dgv_matric = New DataGridView()
         DataGridViewTextBoxColumn1 = New DataGridViewTextBoxColumn()
         DataGridViewTextBoxColumn2 = New DataGridViewTextBoxColumn()
         DataGridViewTextBoxColumn3 = New DataGridViewTextBoxColumn()
-        dgv_matri = New DataGridView()
+        dgv_pendie = New DataGridView()
         DataGridViewTextBoxColumn4 = New DataGridViewTextBoxColumn()
         DataGridViewTextBoxColumn5 = New DataGridViewTextBoxColumn()
         DataGridViewTextBoxColumn6 = New DataGridViewTextBoxColumn()
@@ -50,19 +50,16 @@ Partial Class frm_asiganr
         btn_matriculadas_aprobadas = New Button()
         btn_matri_pend = New Button()
         btn_pend_matri = New Button()
-        lbl_porc_apro = New Label()
         btn_buscar = New Button()
-        pb_aprobadas = New ProgressBar()
-        Label7 = New Label()
-        lbl_materia_matri = New Label()
-        lbl_materia_pend = New Label()
+        lbl_materia_pendie = New Label()
+        lbl_materia_matric = New Label()
         lbl_materia_apro = New Label()
         txt_nota_obtenida = New TextBox()
         Label8 = New Label()
         ErrorProvider1 = New ErrorProvider(components)
         CType(dgv_apro, ComponentModel.ISupportInitialize).BeginInit()
-        CType(dgv_pend, ComponentModel.ISupportInitialize).BeginInit()
-        CType(dgv_matri, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgv_matric, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgv_pendie, ComponentModel.ISupportInitialize).BeginInit()
         CType(ErrorProvider1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -72,16 +69,16 @@ Partial Class frm_asiganr
         dgv_apro.BackgroundColor = SystemColors.MenuHighlight
         dgv_apro.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         dgv_apro.Columns.AddRange(New DataGridViewColumn() {ID_Materia, Nombre_materia, Estado})
-        dgv_apro.Location = New Point(-3, 247)
+        dgv_apro.Location = New Point(1, 247)
         dgv_apro.Name = "dgv_apro"
-        dgv_apro.Size = New Size(337, 487)
+        dgv_apro.Size = New Size(345, 530)
         dgv_apro.TabIndex = 0
         ' 
         ' ID_Materia
         ' 
-        ID_Materia.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         ID_Materia.HeaderText = "ID Materia"
         ID_Materia.Name = "ID_Materia"
+        ID_Materia.Width = 67
         ' 
         ' Nombre_materia
         ' 
@@ -91,27 +88,27 @@ Partial Class frm_asiganr
         ' 
         ' Estado
         ' 
-        Estado.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        Estado.HeaderText = "Estado"
+        Estado.HeaderText = "Requisito"
         Estado.Name = "Estado"
+        Estado.Width = 67
         ' 
-        ' dgv_pend
+        ' dgv_matric
         ' 
-        dgv_pend.AllowUserToAddRows = False
-        dgv_pend.BackgroundColor = SystemColors.MenuHighlight
-        dgv_pend.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgv_pend.Columns.AddRange(New DataGridViewColumn() {DataGridViewTextBoxColumn1, DataGridViewTextBoxColumn2, DataGridViewTextBoxColumn3})
-        dgv_pend.Location = New Point(421, 247)
-        dgv_pend.Name = "dgv_pend"
-        dgv_pend.Size = New Size(353, 487)
-        dgv_pend.TabIndex = 1
+        dgv_matric.AllowUserToAddRows = False
+        dgv_matric.BackgroundColor = SystemColors.MenuHighlight
+        dgv_matric.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgv_matric.Columns.AddRange(New DataGridViewColumn() {DataGridViewTextBoxColumn1, DataGridViewTextBoxColumn2, DataGridViewTextBoxColumn3})
+        dgv_matric.Location = New Point(438, 247)
+        dgv_matric.Name = "dgv_matric"
+        dgv_matric.Size = New Size(345, 530)
+        dgv_matric.TabIndex = 1
         ' 
         ' DataGridViewTextBoxColumn1
         ' 
-        DataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DataGridViewTextBoxColumn1.FillWeight = 78.88146F
         DataGridViewTextBoxColumn1.HeaderText = "ID Materia"
         DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        DataGridViewTextBoxColumn1.Width = 67
         ' 
         ' DataGridViewTextBoxColumn2
         ' 
@@ -122,26 +119,26 @@ Partial Class frm_asiganr
         ' 
         ' DataGridViewTextBoxColumn3
         ' 
-        DataGridViewTextBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DataGridViewTextBoxColumn3.FillWeight = 106.598984F
-        DataGridViewTextBoxColumn3.HeaderText = "Estado"
+        DataGridViewTextBoxColumn3.HeaderText = "Requisito"
         DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        DataGridViewTextBoxColumn3.Width = 67
         ' 
-        ' dgv_matri
+        ' dgv_pendie
         ' 
-        dgv_matri.BackgroundColor = SystemColors.MenuHighlight
-        dgv_matri.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgv_matri.Columns.AddRange(New DataGridViewColumn() {DataGridViewTextBoxColumn4, DataGridViewTextBoxColumn5, DataGridViewTextBoxColumn6})
-        dgv_matri.Location = New Point(861, 247)
-        dgv_matri.Name = "dgv_matri"
-        dgv_matri.Size = New Size(349, 487)
-        dgv_matri.TabIndex = 2
+        dgv_pendie.BackgroundColor = SystemColors.MenuHighlight
+        dgv_pendie.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgv_pendie.Columns.AddRange(New DataGridViewColumn() {DataGridViewTextBoxColumn4, DataGridViewTextBoxColumn5, DataGridViewTextBoxColumn6})
+        dgv_pendie.Location = New Point(882, 247)
+        dgv_pendie.Name = "dgv_pendie"
+        dgv_pendie.Size = New Size(345, 530)
+        dgv_pendie.TabIndex = 2
         ' 
         ' DataGridViewTextBoxColumn4
         ' 
-        DataGridViewTextBoxColumn4.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         DataGridViewTextBoxColumn4.HeaderText = "ID Materia"
         DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        DataGridViewTextBoxColumn4.Width = 67
         ' 
         ' DataGridViewTextBoxColumn5
         ' 
@@ -151,9 +148,9 @@ Partial Class frm_asiganr
         ' 
         ' DataGridViewTextBoxColumn6
         ' 
-        DataGridViewTextBoxColumn6.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewTextBoxColumn6.HeaderText = "Estado"
+        DataGridViewTextBoxColumn6.HeaderText = "Requisito"
         DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        DataGridViewTextBoxColumn6.Width = 67
         ' 
         ' txt_identificacion
         ' 
@@ -168,7 +165,7 @@ Partial Class frm_asiganr
         txt_nombre_estudiante.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         txt_nombre_estudiante.Location = New Point(1037, 29)
         txt_nombre_estudiante.Name = "txt_nombre_estudiante"
-        txt_nombre_estudiante.Size = New Size(163, 26)
+        txt_nombre_estudiante.Size = New Size(179, 26)
         txt_nombre_estudiante.TabIndex = 4
         ' 
         ' txt_carrera
@@ -176,7 +173,7 @@ Partial Class frm_asiganr
         txt_carrera.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         txt_carrera.Location = New Point(1037, 90)
         txt_carrera.Name = "txt_carrera"
-        txt_carrera.Size = New Size(163, 26)
+        txt_carrera.Size = New Size(179, 26)
         txt_carrera.TabIndex = 5
         ' 
         ' Label1
@@ -235,9 +232,9 @@ Partial Class frm_asiganr
         Label5.ForeColor = Color.White
         Label5.Location = New Point(558, 213)
         Label5.Name = "Label5"
-        Label5.Size = New Size(115, 24)
+        Label5.Size = New Size(129, 24)
         Label5.TabIndex = 10
-        Label5.Text = "Pendientes"
+        Label5.Text = "Matriculadas"
         ' 
         ' Label6
         ' 
@@ -247,40 +244,40 @@ Partial Class frm_asiganr
         Label6.ForeColor = Color.White
         Label6.Location = New Point(1015, 211)
         Label6.Name = "Label6"
-        Label6.Size = New Size(129, 24)
+        Label6.Size = New Size(115, 24)
         Label6.TabIndex = 11
-        Label6.Text = "Matriculadas"
+        Label6.Text = "Pendientes"
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(335, 410)
+        Button1.Location = New Point(350, 410)
         Button1.Name = "Button1"
         Button1.Size = New Size(85, 23)
         Button1.TabIndex = 12
-        Button1.Text = "Pendiente >"
+        Button1.Text = "Matricular>"
         Button1.UseVisualStyleBackColor = True
         ' 
         ' btn_pend_apro
         ' 
-        btn_pend_apro.Location = New Point(335, 510)
+        btn_pend_apro.Location = New Point(350, 510)
         btn_pend_apro.Name = "btn_pend_apro"
         btn_pend_apro.Size = New Size(85, 23)
         btn_pend_apro.TabIndex = 13
-        btn_pend_apro.Text = "< Aprobadas"
+        btn_pend_apro.Text = "< Aprobar"
         btn_pend_apro.UseVisualStyleBackColor = True
         ' 
         ' Button3
         ' 
-        Button3.Location = New Point(335, 610)
+        Button3.Location = New Point(350, 610)
         Button3.Name = "Button3"
         Button3.Size = New Size(85, 23)
         Button3.TabIndex = 14
-        Button3.Text = "Matricular>>"
+        Button3.Text = "Pendiente>>"
         Button3.UseVisualStyleBackColor = True
         ' 
         ' btn_matriculadas_aprobadas
         ' 
-        btn_matriculadas_aprobadas.Location = New Point(776, 610)
+        btn_matriculadas_aprobadas.Location = New Point(791, 610)
         btn_matriculadas_aprobadas.Name = "btn_matriculadas_aprobadas"
         btn_matriculadas_aprobadas.Size = New Size(85, 23)
         btn_matriculadas_aprobadas.TabIndex = 17
@@ -289,33 +286,21 @@ Partial Class frm_asiganr
         ' 
         ' btn_matri_pend
         ' 
-        btn_matri_pend.Location = New Point(776, 410)
+        btn_matri_pend.Location = New Point(791, 410)
         btn_matri_pend.Name = "btn_matri_pend"
         btn_matri_pend.Size = New Size(85, 23)
         btn_matri_pend.TabIndex = 16
-        btn_matri_pend.Text = "< Pendiente"
+        btn_matri_pend.Text = "<Matricular"
         btn_matri_pend.UseVisualStyleBackColor = True
         ' 
         ' btn_pend_matri
         ' 
-        btn_pend_matri.Location = New Point(776, 510)
+        btn_pend_matri.Location = New Point(791, 510)
         btn_pend_matri.Name = "btn_pend_matri"
         btn_pend_matri.Size = New Size(85, 23)
         btn_pend_matri.TabIndex = 15
-        btn_pend_matri.Text = "Matricular > "
+        btn_pend_matri.Text = "Pendiente> "
         btn_pend_matri.UseVisualStyleBackColor = True
-        ' 
-        ' lbl_porc_apro
-        ' 
-        lbl_porc_apro.AutoSize = True
-        lbl_porc_apro.BackColor = Color.Transparent
-        lbl_porc_apro.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        lbl_porc_apro.ForeColor = Color.White
-        lbl_porc_apro.Location = New Point(664, 29)
-        lbl_porc_apro.Name = "lbl_porc_apro"
-        lbl_porc_apro.Size = New Size(22, 18)
-        lbl_porc_apro.TabIndex = 18
-        lbl_porc_apro.Text = "%"
         ' 
         ' btn_buscar
         ' 
@@ -328,44 +313,25 @@ Partial Class frm_asiganr
         btn_buscar.Text = "Buscar"
         btn_buscar.UseVisualStyleBackColor = True
         ' 
-        ' pb_aprobadas
+        ' lbl_materia_pendie
         ' 
-        pb_aprobadas.Location = New Point(558, 27)
-        pb_aprobadas.Name = "pb_aprobadas"
-        pb_aprobadas.Size = New Size(100, 23)
-        pb_aprobadas.TabIndex = 20
+        lbl_materia_pendie.AutoSize = True
+        lbl_materia_pendie.Location = New Point(1037, 167)
+        lbl_materia_pendie.Name = "lbl_materia_pendie"
+        lbl_materia_pendie.Size = New Size(41, 15)
+        lbl_materia_pendie.TabIndex = 25
+        lbl_materia_pendie.Text = "Label8"
+        lbl_materia_pendie.Visible = False
         ' 
-        ' Label7
+        ' lbl_materia_matric
         ' 
-        Label7.AutoSize = True
-        Label7.BackColor = Color.Transparent
-        Label7.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label7.ForeColor = Color.White
-        Label7.Location = New Point(421, 32)
-        Label7.Name = "Label7"
-        Label7.Size = New Size(114, 18)
-        Label7.TabIndex = 24
-        Label7.Text = "Avance carrera"
-        ' 
-        ' lbl_materia_matri
-        ' 
-        lbl_materia_matri.AutoSize = True
-        lbl_materia_matri.Location = New Point(1037, 167)
-        lbl_materia_matri.Name = "lbl_materia_matri"
-        lbl_materia_matri.Size = New Size(41, 15)
-        lbl_materia_matri.TabIndex = 25
-        lbl_materia_matri.Text = "Label8"
-        lbl_materia_matri.Visible = False
-        ' 
-        ' lbl_materia_pend
-        ' 
-        lbl_materia_pend.AutoSize = True
-        lbl_materia_pend.Location = New Point(596, 182)
-        lbl_materia_pend.Name = "lbl_materia_pend"
-        lbl_materia_pend.Size = New Size(41, 15)
-        lbl_materia_pend.TabIndex = 26
-        lbl_materia_pend.Text = "Label8"
-        lbl_materia_pend.Visible = False
+        lbl_materia_matric.AutoSize = True
+        lbl_materia_matric.Location = New Point(596, 182)
+        lbl_materia_matric.Name = "lbl_materia_matric"
+        lbl_materia_matric.Size = New Size(41, 15)
+        lbl_materia_matric.TabIndex = 26
+        lbl_materia_matric.Text = "Label8"
+        lbl_materia_matric.Visible = False
         ' 
         ' lbl_materia_apro
         ' 
@@ -379,20 +345,21 @@ Partial Class frm_asiganr
         ' 
         ' txt_nota_obtenida
         ' 
+        txt_nota_obtenida.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         txt_nota_obtenida.Location = New Point(558, 127)
         txt_nota_obtenida.Name = "txt_nota_obtenida"
-        txt_nota_obtenida.Size = New Size(100, 23)
+        txt_nota_obtenida.Size = New Size(100, 26)
         txt_nota_obtenida.TabIndex = 28
         ' 
         ' Label8
         ' 
         Label8.AutoSize = True
         Label8.BackColor = Color.Transparent
-        Label8.Font = New Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        Label8.Font = New Font("Arial", 15.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         Label8.ForeColor = Color.White
-        Label8.Location = New Point(421, 132)
+        Label8.Location = New Point(396, 126)
         Label8.Name = "Label8"
-        Label8.Size = New Size(106, 18)
+        Label8.Size = New Size(140, 24)
         Label8.TabIndex = 29
         Label8.Text = "Nota obtenida"
         ' 
@@ -406,16 +373,13 @@ Partial Class frm_asiganr
         AutoScaleMode = AutoScaleMode.Font
         BackgroundImage = My.Resources.Resources.fondo_loggin
         BackgroundImageLayout = ImageLayout.Stretch
-        ClientSize = New Size(1212, 738)
+        ClientSize = New Size(1228, 777)
         Controls.Add(Label8)
         Controls.Add(txt_nota_obtenida)
         Controls.Add(lbl_materia_apro)
-        Controls.Add(lbl_materia_pend)
-        Controls.Add(lbl_materia_matri)
-        Controls.Add(Label7)
-        Controls.Add(pb_aprobadas)
+        Controls.Add(lbl_materia_matric)
+        Controls.Add(lbl_materia_pendie)
         Controls.Add(btn_buscar)
-        Controls.Add(lbl_porc_apro)
         Controls.Add(btn_matriculadas_aprobadas)
         Controls.Add(btn_matri_pend)
         Controls.Add(btn_pend_matri)
@@ -431,30 +395,24 @@ Partial Class frm_asiganr
         Controls.Add(txt_carrera)
         Controls.Add(txt_nombre_estudiante)
         Controls.Add(txt_identificacion)
-        Controls.Add(dgv_matri)
-        Controls.Add(dgv_pend)
+        Controls.Add(dgv_pendie)
+        Controls.Add(dgv_matric)
         Controls.Add(dgv_apro)
         DoubleBuffered = True
         FormBorderStyle = FormBorderStyle.None
         Name = "frm_asiganr"
         Text = "frm_asiganr"
         CType(dgv_apro, ComponentModel.ISupportInitialize).EndInit()
-        CType(dgv_pend, ComponentModel.ISupportInitialize).EndInit()
-        CType(dgv_matri, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgv_matric, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgv_pendie, ComponentModel.ISupportInitialize).EndInit()
         CType(ErrorProvider1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
     Friend WithEvents dgv_apro As DataGridView
-    Friend WithEvents ID_Materia As DataGridViewTextBoxColumn
-    Friend WithEvents Nombre_materia As DataGridViewTextBoxColumn
-    Friend WithEvents Estado As DataGridViewTextBoxColumn
-    Friend WithEvents dgv_pend As DataGridView
-    Friend WithEvents dgv_matri As DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents dgv_matric As DataGridView
+    Friend WithEvents dgv_pendie As DataGridView
     Friend WithEvents txt_identificacion As TextBox
     Friend WithEvents txt_nombre_estudiante As TextBox
     Friend WithEvents txt_carrera As TextBox
@@ -470,17 +428,20 @@ Partial Class frm_asiganr
     Friend WithEvents btn_matriculadas_aprobadas As Button
     Friend WithEvents btn_matri_pend As Button
     Friend WithEvents btn_pend_matri As Button
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
-    Friend WithEvents lbl_porc_apro As Label
     Friend WithEvents btn_buscar As Button
-    Friend WithEvents pb_aprobadas As ProgressBar
-    Friend WithEvents Label7 As Label
-    Friend WithEvents lbl_materia_matri As Label
-    Friend WithEvents lbl_materia_pend As Label
+    Friend WithEvents lbl_materia_pendie As Label
+    Friend WithEvents lbl_materia_matric As Label
     Friend WithEvents lbl_materia_apro As Label
     Friend WithEvents txt_nota_obtenida As TextBox
     Friend WithEvents Label8 As Label
     Friend WithEvents ErrorProvider1 As ErrorProvider
+    Friend WithEvents ID_Materia As DataGridViewTextBoxColumn
+    Friend WithEvents Nombre_materia As DataGridViewTextBoxColumn
+    Friend WithEvents Estado As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
 End Class
